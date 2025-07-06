@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Ilam - Queen of the Hills</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      background: #e8f0e6;
+      color: #1a3c34;
+      overflow-x: hidden;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+    
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: #2ecc71;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #1a3c34;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, background;
+    }
+    nav ul li a:hover {
+      background: #2ecc71;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      transform: translateZ(-1px) scale(1.5);
+      z-index: -1;
+    }
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 64px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+      animation: slideIn 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero p {
+      font-size: 24px;
+      max-width: 700px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      animation: slideIn 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .section {
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 40px;
+      color: #1a3c34;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .section h2::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: #2ecc71;
+      margin: 10px auto;
+    }
+    .place-card {
+      margin-bottom: 40px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .place-card:hover {
+      transform: perspective(1000px) translateZ(30px) rotateY(5deg);
+    }
+    .place-card img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 12px 12px 0 0;
+    }
+    .place-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      color: #1a3c34;
+      padding: 15px 20px 10px;
+    }
+    .place-card p {
+      font-size: 16px;
+      color: #4a4a4a;
+      padding: 0 20px 15px;
+    }
+    .place-card iframe {
+      border-radius: 0 0 12px 12px;
+      width: 100%;
+      height: 300px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .card:hover {
+      transform: perspective(1000px) translateZ(30px) rotateX(5deg);
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      color: #1a3c34;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 15px;
+      color: #4a4a4a;
+    }
+    .contact-links {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-links a {
+      display: inline-block;
+      margin: 15px;
+      color: #2ecc71;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: 2px solid #2ecc71;
+      border-radius: 25px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: background, color;
+    }
+    .contact-links a:hover {
+      background: #2ecc71;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+    .modal-content {
+      background: #fff;
+      max-width: 600px;
+      width: 90%;
+      padding: 30px;
+      border-radius: 12px;
+      position: relative;
+      transform: rotateY(45deg);
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .modal-content.visible {
+      transform: rotateY(0deg);
+    }
+    .modal-content h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      color: #1a3c34;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .modal-content form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+    .modal-content input:focus,
+    .modal-content textarea:focus,
+    .modal-content select:focus {
+      border-color: #2ecc71;
+      outline: none;
+    }
+    .modal-content button {
+      padding: 12px;
+      background: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, background;
+    }
+    .modal-content button:hover {
+      background: #27ae60;
+      transform: translateY(-3px);
+    }
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      color: #1a3c34;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .close-btn:hover {
+      transform: rotate(90deg);
+    }
+    .reviews-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+    .review {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .review:hover {
+      transform: perspective(1000px) translateZ(10px);
+    }
+    .review p {
+      font-size: 15px;
+      color: #4a4a4a;
+    }
+    .review .rating {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+    footer {
+      background: #1a3c34;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 48px;
+      }
+      .hero p {
+        font-size: 18px;
+      }
+      .section h2 {
+        font-size: 32px;
+      }
+      nav ul {
+        gap: 15px;
+      }
+      nav ul li a {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+      .place-card img {
+        max-height: 300px;
+      }
+      .modal-content {
+        width: 95%;
+        padding: 20px;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+      .section h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Ilam Tourism</div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#places">Attractions</a></li>
+        <li><a href="#food">Food</a></li>
+        <li><a href="#transport">Transport</a></li>
+        <li><a href="#stay">Stay</a></li>
+        <li><a href="#map">Map</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <h1>Welcome to Ilam</h1>
+    <p>Queen of the Hills - Discover the serenity of tea gardens and Himalayan vistas.</p>
+  </section>
+
+  <section id="places" class="section">
+    <h2>Top Attractions in Ilam</h2>
+    <div class="place-card">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800" alt="Antu Danda">
+      <h3>Antu Danda</h3>
+      <p>Marvel at stunning sunrise views over the Himalayas, surrounded by lush tea gardens.</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.801687005543!2d87.9590295152395!3d26.91649098315267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e5b9c7b301f1bb%3A0x37e64bcd7f265f01!2sAntu%20Danda%2C%20Ilam!5e0!3m2!1sen!2snp!4v1688557773374!5m2!1sen!2snp" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <div class="place-card">
+      <img src="https://images.unsplash.com/photo-1513415564515-763d91423b46?q=80&w=800" alt="Kanyam Tea Garden">
+      <h3>Kanyam Tea Garden</h3>
+      <p>Explore vibrant tea estates with scenic trails, perfect for a refreshing escape.</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.748163123515!2d87.88796551523966!3d26.922436583143524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e5bc3d06eb1323%3A0x2216b0920f386d81!2sKanyam%20Tea%20Garden!5e0!3m2!1sen!2snp!4v1688557849243!5m2!1sen!2snp" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <div class="place-card">
+      <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?q=80&w=800" alt="Mai Pokhari">
+      <h3>Mai Pokhari</h3>
+      <p>Visit the sacred lake nestled in serene forests, a haven for nature and spirituality.</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.788130123265!2d87.92058851523954!3d26.919501383148758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e5bc4a80245fef%3A0x4a6d86b261b11047!2sMai%20Pokhari!5e0!3m2!1sen!2snp!4v1688557894023!5m2!1sen!2snp" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section id="food" class="section">
+    <h2>Local Delights</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Tongba</h3>
+        <p>Warm millet-based drink, a cozy local favorite.</p>
+      </div>
+      <div class="card">
+        <h3>Sukuti</h3>
+        <p>Spicy dried meat, perfect for festive evenings.</p>
+      </div>
+      <div class="card">
+        <h3>Gundruk & Sinki</h3>
+        <p>Fermented veggies in flavorful soups or curries.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="transport" class="section">
+    <h2>How to Reach Ilam</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>By Bus</h3>
+        <p>Night bus from Kathmandu to Birtamod, then jeep to Ilam.</p>
+      </div>
+      <div class="card">
+        <h3>By Air</h3>
+        <p>Fly to Bhadrapur from Kathmandu, then a 2-hour drive.</p>
+      </div>
+      <div class="card">
+        <h3>From India</h3>
+        <p>Enter via Kakarbhitta from Darjeeling or Siliguri.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="stay" class="section">
+    <h2>Where to Stay</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Hotel Green View</h3>
+        <p>Modern comfort. Call: 9841234567.</p>
+      </div>
+      <div class="card">
+        <h3>Tea Garden Homestay</h3>
+        <p>Scenic views, organic meals.</p>
+      </div>
+      <div class="card">
+        <h3>Mai Pokhari Inn</h3>
+        <p>Peaceful stay near the lake.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="map" class="section">
+    <h2>Explore Ilam</h2>
+    <iframe src="https://www.google.com/maps/d/embed?mid=1p5FwPoMAP-SAMPLE" width="100%" height="400" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <div class="contact-links">
+      <p>Reach out to plan your unforgettable trip to Ilam!</p>
+      <a href="https://www.instagram.com/your_instagram" target="_blank">Instagram: @your_instagram</a>
+      <a href="tel:+9771234567890">Mobile: +977-1234567890</a>
+      <a href="mailto:your.email@example.com">Email: your.email@example.com</a>
+    </div>
+  </section>
+
+  <div id="reviewModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">×</span>
+      <h2>Visitor Reviews</h2>
+      <form id="reviewForm">
+        <input type="text" id="reviewName" placeholder="Your Name" required>
+        <select id="reviewRating" required>
+          <option value="" disabled selected>Select Rating (1-5)</option>
+          <option value="1">1 Star</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select>
+        <textarea id="reviewComment" placeholder="Share your experience" rows="4" required></textarea>
+        <button type="submit">Submit Review</button>
+      </form>
+      <div class="reviews-list" id="reviewsList"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Ilam Tourism | Designed by Sabin Ghimire</p>
+  </footer>
+
+  <script>
+    // Smooth section reveal on scroll
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+    sections.forEach(section => observer.observe(section));
+
+    // Parallax effect for hero
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero');
+      const scrollPosition = window.scrollY;
+      hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+    });
+
+    // Initialize reviews from localStorage or use default reviews
+    let reviews = JSON.parse(localStorage.getItem('reviews')) || [
+      { name: "John Doe", rating: "5", comment: "The tea gardens are breathtaking! A must-visit!", date: "2025-07-05" },
+      { name: "Jane Smith", rating: "4", comment: "Loved the sunrise at Antu Danda, truly magical.", date: "2025-07-04" }
+    ];
+
+    // Modal functionality
+    const reviewLink = document.querySelector('a[href="#reviews"]');
+    const modal = document.getElementById('reviewModal');
+    const modalContent = document.querySelector('.modal-content');
+    const closeBtn = document.querySelector('.close-btn');
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewsList = document.getElementById('reviewsList');
+
+    reviewLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      setTimeout(() => modalContent.classList.add('visible'), 10);
+      displayReviews();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modalContent.classList.remove('visible');
+      setTimeout(() => modal.style.display = 'none', 600);
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modalContent.classList.remove('visible');
+        setTimeout(() => modal.style.display = 'none', 600);
+      }
+    });
+
+    // Form submission
+    reviewForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reviewName').value.trim();
+      const rating = document.getElementById('reviewRating').value;
+      const comment = document.getElementById('reviewComment').value.trim();
+
+      if (name.length > 50 || comment.length > 500) {
+        alert('Name or comment too long.');
+        return;
+      }
+
+      const review = {
+        name,
+        rating,
+        comment,
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      reviews.push(review);
+      localStorage.setItem('reviews', JSON.stringify(reviews));
+      reviewForm.reset();
+      displayReviews();
+      alert('Review submitted successfully!');
+    });
+
+    // Display reviews
+    function displayReviews() {
+      reviewsList.innerHTML = '';
+      reviews.forEach(review => {
+        const reviewDiv = document.createElement('div');
+        reviewDiv.className = 'review';
+        reviewDiv.innerHTML = `
+          <p><strong>${review.name}</strong> (<span class="rating">${review.rating} Stars</span>): ${review.comment}</p>
+          <p><small>${review.date}</small></p>
+        `;
+        reviewsList.appendChild(reviewDiv);
+      });
+    }
+  </script>
+</body>
+</html>
